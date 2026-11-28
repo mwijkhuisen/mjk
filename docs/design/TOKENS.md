@@ -45,15 +45,19 @@ Design handoff, 2026-11-28. This block replaces the `:root` block and the dark b
   --color-danger: #a3321f; /* was #b3261e */
   --color-star: #8f5d08; /* NEW: filled stars, score bars (were the accent) */
   --color-star-off: #797264; /* NEW: empty stars (was border-strong) */
+  /* Stamp inks, one per category (HANDOFF.md §1). Never green: green means only "Museumkaart geldig". */
   --color-ink-red: #a8382c; /* NEW: stamp ink, art */
   --color-ink-ochre: #8a5a0a; /* NEW: stamp ink, history */
-  --color-ink-green: #23694a; /* NEW: stamp ink, natural history */
+  --color-ink-plum: #8c2e6a; /* NEW: stamp ink, natural history */
   --color-ink-teal: #0f6672; /* NEW: stamp ink, science and technology */
   --color-ink-violet: #6b3f8c; /* NEW: stamp ink, ethnology */
-  /* Map markers: unchanged. Checked on 2026-11-28 against all 24 fills of style-nl.json: 3.9:1 or more. */
-  --color-map-mk: #9a3d00;
+  --color-ink-blue: #1f3f8f; /* NEW: stamp ink, other (the logo's Delft blue) */
+  /* Map markers: the same five colours as before; the Museumkaart diamond and the visited square swap,
+     so green means Museumkaart on the map too. Both were checked on 2026-11-28 against all 24 fills of
+     style-nl.json (3.9:1 or more), so the swap keeps every contrast.test.ts case green. */
+  --color-map-mk: #17693a; /* was #9a3d00 (the visited colour before) */
   --color-map-other: #2b4c8c;
-  --color-map-visited: #17693a;
+  --color-map-visited: #9a3d00; /* was #17693a (the Museumkaart colour before) */
   --color-map-wishlist: #7a2e8e;
   --color-map-cluster: #1f3a6e;
   --color-map-outline: #ffffff;
@@ -78,8 +82,17 @@ Design handoff, 2026-11-28. This block replaces the `:root` block and the dark b
   --font-size-xl: 1.625rem;
   --font-size-2xl: 2rem;
   --font-size-3xl: 2.5rem; /* NEW: the promise on the home page */
-  --line-height: 1.6;
-  --line-height-tight: 1.25;
+  --font-weight-regular: 400; /* NEW: body text */
+  --font-weight-label: 600; /* NEW: labels, --font-size-xs */
+  --font-weight-bold: 700; /* NEW: buttons, h2, --font-size-lg, emphasis */
+  --font-weight-heading: 800; /* NEW: h1, --font-size-xl to -3xl, the wordmark */
+  --line-height: 1.6; /* body, --font-size-base */
+  --line-height-tight: 1.25; /* --font-size-xl */
+  --line-height-3xl: 1.15; /* NEW */
+  --line-height-2xl: 1.2; /* NEW */
+  --line-height-lg: 1.3; /* NEW */
+  --line-height-sm: 1.5; /* NEW */
+  --line-height-xs: 1.3; /* NEW */
   --max-width: 72rem;
   --measure: 70ch;
   --tap: 2.75rem;
@@ -108,9 +121,26 @@ Design handoff, 2026-11-28. This block replaces the `:root` block and the dark b
     --color-star-off: #8d8678;
     --color-ink-red: #f2a093;
     --color-ink-ochre: #e2b24f;
-    --color-ink-green: #86d3a6;
+    --color-ink-plum: #eba2d0;
     --color-ink-teal: #7fd0da;
     --color-ink-violet: #cfa9ea;
+    --color-ink-blue: #a9bef5;
   }
+}
+```
+
+Contrast of the inks (WCAG formula of `contrast.test.ts`, 2026-11-28): every ink is 4.7:1 or more on `bg`, `surface` and `surface-sunken` in both themes; the new plum is 6.1:1 or more and the blue 7.7:1 or more. They are graphics, so the bar is 3:1.
+
+The base styles (not the token blocks) carry the type rules that go with the tokens. Only upright files ship, so a browser would otherwise slant `em` and `cite` itself:
+
+```css
+html {
+  font-synthesis-style: none;
+}
+em, i, cite, dfn, var, address {
+  font-style: normal;
+}
+em {
+  font-weight: var(--font-weight-bold);
 }
 ```
